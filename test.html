@@ -1,0 +1,73 @@
+{% load static tailwind_tags wagtailcore_tags wagtailuserbar %}
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+    <meta charset="utf-8" />
+    {% tailwind_css %}
+    <title>
+        {% block title %}
+        {% if page.seo_title %}{{ page.seo_title }}{% else %}{{ page.title }}{% endif %}
+        {% endblock %}
+        {% block title_suffix %}
+        {% wagtail_site as current_site %}
+        {% if current_site and current_site.site_name %}- {{ current_site.site_name }}{% endif %}
+        {% endblock %}
+    </title>
+    {% if page.search_description %}
+    <meta name="description" content="{{ page.search_description }}" />
+    {% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    
+    <!-- فونت شبیه واگتیل -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <!-- <link rel="stylesheet" href="{% static 'css/tailwind.css' %}"> -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@3.4.4/dist/tailwind.min.css" rel="stylesheet">
+    
+    {% block extra_css %}{% endblock %}
+</head>
+<body class="bg-wagtail-gray font-sans">
+    {% wagtailuserbar %}
+    
+    <!-- ساختار اصلی شبیه پنل واگتیل -->
+    <div class="flex h-screen">
+        <!-- سایدبار -->
+        <aside class="wagtail-sidebar">
+            <div class="p-4 border-b border-gray-700">
+                <h1 class="text-xl font-bold"> </h1>
+            </div>
+            <nav class="mt-5">
+                <a href="#" class="block px-4 py-2 hover:bg-gray-700">داشبورد</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-700">صفحات</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-700">مدیا</a>
+                <a href="#" class="block px-4 py-2 hover:bg-gray-700">کاربران</a>
+            </nav>
+        </aside>
+        
+        <!-- محتوای اصلی -->
+        <div class="flex-1 flex flex-col overflow-hidden">
+            <!-- هدر -->
+            <header class="wagtail-header">
+                <div class="flex items-center">
+                    <button class="md:hidden mr-4">☰</button>
+                    <h2 class="text-lg font-semibold">{% block page_title %}صفحه اصلی{% endblock %}</h2>
+                </div>
+                <div class="flex items-center space-x-4 space-x-reverse">
+                    <span>خوش آمدید، {{ user.username }}</span>
+                    <button class="wagtail-btn">خروج</button>
+                </div>
+            </header>
+            
+            <!-- محتوای صفحه -->
+            <main class="flex-1 overflow-y-auto p-6 bg-white">
+                {% block content %}{% endblock %}
+            </main>
+        </div>
+    </div>
+    
+    <!-- اسکریپت‌ها -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html>
