@@ -23,10 +23,8 @@ from wagtail.contrib.settings.models import (
     register_setting,
 )
 
-# import register_snippet:
 from wagtail.snippets.models import register_snippet
 
-# ...keep the definition of the NavigationSettings model and add the FooterText model:
 
 @register_setting
 class NavigationSettings(BaseGenericSetting):
