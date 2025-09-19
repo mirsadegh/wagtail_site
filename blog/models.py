@@ -9,7 +9,7 @@ from taggit.models import TaggedItemBase
 from wagtail.models import Page, Orderable
 from wagtail.snippets.models import register_snippet
 from wagtail.admin.panels import FieldPanel, MultiFieldPanel
-
+from wagtail.search  import index
 
 class BlogIndexPage(Page):
     intro = RichTextField(blank=True)
@@ -37,6 +37,10 @@ class BlogPage(Page):
 
     tags = ClusterTaggableManager(through=BlogPageTag, blank=True)
 
+    search_fields = Page.search_fields + [
+        index.SearchField('intro'),
+        index.SearchField('body'),
+    ]
 
     def main_image(self):
         gallery_item = self.gallery_images.first()

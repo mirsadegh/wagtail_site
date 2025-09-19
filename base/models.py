@@ -47,8 +47,6 @@ class NavigationSettings(BaseGenericSetting):
     ]        
 
 
-
-
 @register_snippet
 class FooterText(
     DraftStateMixin,
